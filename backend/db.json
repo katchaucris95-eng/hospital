@@ -1,0 +1,556 @@
+{
+  "usuarios": [
+    {
+      "usuario": "triagem",
+      "senha": "123",
+      "tipo": "triagem"
+    },
+    {
+      "usuario": "medico",
+      "senha": "123",
+      "tipo": "medico"
+    },
+    {
+      "usuario": "atendimento",
+      "senha": "123",
+      "tipo": "atendimento"
+    },
+    {
+      "id": 1792670260582,
+      "usuario": "luiza",
+      "senha": "123",
+      "tipo": "medico"
+    }
+  ],
+  "pacientes": [
+    {
+      "id": 1776857728699,
+      "nome": "",
+      "cpf": "",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-04-22T11:35:28.699Z"
+    },
+    {
+      "id": 1776865888237,
+      "nome": "jesus",
+      "cpf": "0000000000000",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-04-22T13:51:28.237Z"
+    },
+    {
+      "id": 1776868888454,
+      "nome": "kinder ovo ",
+      "cpf": "6546468844",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-04-22T14:41:28.454Z"
+    },
+    {
+      "id": 1776871886695,
+      "nome": "enzo",
+      "cpf": "545343554",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-04-22T15:31:26.695Z"
+    },
+    {
+      "id": 1777895890000,
+      "nome": "teste08",
+      "cpf": "rgregregergerg",
+      "tipo": "Convenio",
+      "status": "triagem",
+      "createdAt": "2026-05-04T11:58:10.000Z"
+    },
+    {
+      "id": 1777895903949,
+      "nome": "teste08",
+      "cpf": "45345435434353",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-05-04T11:58:23.949Z"
+    },
+    {
+      "id": 1778767273416,
+      "nome": "yan",
+      "cpf": "53434449.9.449",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-05-14T14:01:13.416Z"
+    },
+    {
+      "id": 1778768219883,
+      "nome": "test50",
+      "cpf": "3253545235",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-05-14T14:16:59.883Z"
+    },
+    {
+      "id": 1778843781579,
+      "nome": "adriana",
+      "cpf": "45455435",
+      "tipo": "Particular",
+      "status": "triagem",
+      "createdAt": "2026-05-15T11:16:21.579Z"
+    }
+  ],
+  "triagens": [
+    {
+      "id": 1776170673545,
+      "nome": "test",
+      "sintomas": "teste",
+      "temp": "test",
+      "risco": "verde",
+      "alergia": "teste"
+    },
+    {
+      "id": 1776857490380,
+      "nome": "teste",
+      "sintomas": "",
+      "temp": "",
+      "risco": "vermelho",
+      "alergia": "",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1776857571101,
+      "nome": "Emily",
+      "sintomas": "dor no olho",
+      "temp": "39",
+      "risco": "vermelho",
+      "alergia": "pipiro",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1776865942693,
+      "nome": "jesus",
+      "sintomas": "dor no olho grego",
+      "temp": "40",
+      "risco": "vermelho",
+      "alergia": "mulher ",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1776868937414,
+      "nome": "kinder ovo ",
+      "sintomas": "dor no olho grego ",
+      "temp": "44",
+      "risco": "vermelho",
+      "alergia": "mulher",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1776871956701,
+      "nome": "ENZO",
+      "sintomas": "DOR NO OLHO GREGO",
+      "temp": "48",
+      "risco": "vermelho",
+      "alergia": "MULHER",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1777895934510,
+      "nome": "teste08",
+      "sintomas": "dor",
+      "temp": "50",
+      "risco": "vermelho",
+      "alergia": "mulhrter",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1778595086172,
+      "nome": "testee444",
+      "sintomas": "teste",
+      "temp": "90",
+      "risco": "verde",
+      "alergia": "teste",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1778595396331,
+      "nome": "teste",
+      "sintoma": "crise_ansiedade",
+      "temperatura": 39,
+      "alergia": "dorflex",
+      "risco": "vermelho",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1778595502464,
+      "nome": "teste",
+      "sintoma": "dor_leve",
+      "temperatura": 37,
+      "alergia": "nao",
+      "risco": "amarelo",
+      "status": "aguardando_medico"
+    },
+    {
+      "id": 1778596152632,
+      "nome": "teste08",
+      "sintoma": "resfriado",
+      "temperatura": 40,
+      "alergia": "nao",
+      "observacao": "teste",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-05-12T14:29:12.632Z"
+    },
+    {
+      "id": 1778674614881,
+      "nome": "teste",
+      "sintoma": "avc",
+      "temperatura": 38,
+      "alergia": "nao",
+      "observacao": "awrwarwara",
+      "risco": "amarelo",
+      "status": "aguardando_medico",
+      "createdAt": "2026-05-13T12:16:54.881Z"
+    },
+    {
+      "id": 1778767334260,
+      "nome": "yan",
+      "sintoma": "hemorragia",
+      "temperatura": 37,
+      "alergia": "dipirona",
+      "observacao": "nenhuma ",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-05-14T14:02:14.260Z"
+    },
+    {
+      "id": 1778768250255,
+      "nome": "teste8",
+      "sintoma": "infarto",
+      "temperatura": 37,
+      "alergia": "nao ",
+      "observacao": "teste",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-05-14T14:17:30.255Z"
+    },
+    {
+      "id": 1778843835856,
+      "nome": "adriana ",
+      "sintoma": "hemorragia",
+      "temperatura": 37,
+      "alergia": "dipirona",
+      "observacao": "",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-05-15T11:17:15.856Z"
+    },
+    {
+      "id": 1780405589261,
+      "nome": "teste",
+      "sintoma": "dor_leve",
+      "temperatura": 39,
+      "alergia": "testger",
+      "observacao": "tewwetewst",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-06-02T13:06:29.261Z"
+    },
+    {
+      "id": 1786029386171,
+      "nome": "",
+      "sintoma": "",
+      "temperatura": 0,
+      "alergia": "",
+      "observacao": "",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-08-06T15:16:26.171Z"
+    },
+    {
+      "id": 1792670753462,
+      "nome": "dani",
+      "sintoma": "febre",
+      "temperatura": 6,
+      "alergia": "alergia",
+      "observacao": "ddd",
+      "risco": "vermelho",
+      "status": "aguardando_medico",
+      "createdAt": "2026-10-22T12:05:53.462Z"
+    }
+  ],
+  "consultas": [
+    {
+      "id": 1776857474039,
+      "paciente": "",
+      "diagnostico": "",
+      "medicacao": "",
+      "obs": "",
+      "createdAt": "2026-04-22T11:31:14.039Z"
+    },
+    {
+      "id": 1776857595380,
+      "paciente": "Emily",
+      "diagnostico": "",
+      "medicacao": "",
+      "obs": "",
+      "createdAt": "2026-04-22T11:33:15.380Z"
+    },
+    {
+      "id": 1776865995021,
+      "paciente": "jesus",
+      "diagnostico": "curado",
+      "medicacao": "noboton",
+      "obs": "",
+      "createdAt": "2026-04-22T13:53:15.021Z"
+    },
+    {
+      "id": 1776869011320,
+      "paciente": "kinder ovo ",
+      "diagnostico": "teste",
+      "medicacao": "nubotom",
+      "obs": "flex ",
+      "createdAt": "2026-04-22T14:43:31.320Z"
+    },
+    {
+      "id": 1776872012556,
+      "paciente": "ENZO",
+      "diagnostico": "JA ERA ",
+      "medicacao": "NUBOTOM",
+      "obs": "",
+      "createdAt": "2026-04-22T15:33:32.556Z"
+    },
+    {
+      "id": 1778767388545,
+      "paciente": "yan",
+      "diagnostico": "test",
+      "medicacao": "test",
+      "obs": "teste",
+      "createdAt": "2026-05-14T14:03:08.545Z"
+    },
+    {
+      "id": 1778768285274,
+      "paciente": "teste8",
+      "diagnostico": "trste",
+      "medicacao": "tetetet",
+      "obs": "etetetete",
+      "createdAt": "2026-05-14T14:18:05.274Z"
+    },
+    {
+      "id": 1778769363544,
+      "paciente": "teste8",
+      "diagnostico": "",
+      "medicacao": "",
+      "obs": "",
+      "createdAt": "2026-05-14T14:36:03.544Z"
+    },
+    {
+      "id": 1780917834569,
+      "paciente": "teste",
+      "diagnostico": "etgw",
+      "medicacao": "wetwert",
+      "obs": "wetewt",
+      "createdAt": "2026-06-08T11:23:54.569Z"
+    },
+    {
+      "id": 1781007572717,
+      "paciente": "",
+      "diagnostico": "",
+      "medicacao": "",
+      "obs": "",
+      "createdAt": "2026-06-09T12:19:32.717Z"
+    },
+    {
+      "id": 1781007577323,
+      "paciente": "",
+      "diagnostico": "",
+      "medicacao": "",
+      "obs": "",
+      "createdAt": "2026-06-09T12:19:37.323Z"
+    },
+    {
+      "id": 1781007795864,
+      "paciente": "adriana ",
+      "diagnostico": "teste",
+      "medicacao": "Soro fisiológico",
+      "obs": "teste",
+      "createdAt": "2026-06-09T12:23:15.864Z"
+    },
+    {
+      "id": 1781007896055,
+      "paciente": "kinder ovo ",
+      "diagnostico": "tste",
+      "medicacao": "Omeprazol",
+      "obs": "teste",
+      "createdAt": "2026-06-09T12:24:56.055Z"
+    },
+    {
+      "id": 1781007993318,
+      "paciente": "testee444",
+      "diagnostico": "ewrwewer",
+      "medicacao": "Amoxicilina",
+      "obs": "gergefregreggerg",
+      "createdAt": "2026-06-09T12:26:33.318Z"
+    },
+    {
+      "id": 1781009371706,
+      "paciente": "Emily",
+      "diagnostico": "dfhdfhfhsf",
+      "medicacao": "Amoxicilina",
+      "obs": "dfhdfhdfhdfs",
+      "createdAt": "2026-06-09T12:49:31.706Z"
+    },
+    {
+      "id": 1781010710968,
+      "paciente": "test",
+      "diagnostico": "twetewtwetwete",
+      "medicacao": "Amoxicilina",
+      "obs": "wetwetewtewt",
+      "createdAt": "2026-06-09T13:11:50.968Z"
+    },
+    {
+      "id": 1781016210683,
+      "paciente": "Emily",
+      "diagnostico": "hghtshr",
+      "medicacao": "Omeprazol",
+      "obs": "rththr",
+      "createdAt": "2026-06-09T14:43:30.683Z"
+    },
+    {
+      "id": 1786029103009,
+      "paciente": "teste",
+      "diagnostico": "",
+      "medicacao": "Paracetamol",
+      "obs": "tewwetewst",
+      "createdAt": "2026-08-06T15:11:43.009Z"
+    },
+    {
+      "id": 1795696061772,
+      "paciente": "dani",
+      "diagnostico": "",
+      "medicacao": "Dipirona",
+      "obs": "ddd",
+      "createdAt": "2026-11-26T12:27:41.772Z"
+    }
+  ],
+  "chamadas": [
+    {
+      "id": 1792683899803,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T15:44:59.803Z"
+    },
+    {
+      "id": 1792682618861,
+      "paciente": "adriana",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T15:23:38.861Z"
+    },
+    {
+      "id": 1792682533525,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T15:22:13.525Z"
+    },
+    {
+      "id": 1792681167444,
+      "paciente": "jesus",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:59:27.444Z"
+    },
+    {
+      "id": 1792681067760,
+      "paciente": "adriana",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:57:47.760Z"
+    },
+    {
+      "id": 1792680915562,
+      "paciente": "adriana",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:55:15.562Z"
+    },
+    {
+      "id": 1792680810520,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:53:30.520Z"
+    },
+    {
+      "id": 1792680664400,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:51:04.400Z"
+    },
+    {
+      "id": 1792680537316,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:48:57.316Z"
+    },
+    {
+      "id": 1792680460498,
+      "paciente": "dani",
+      "localTipo": "GUICHÊ",
+      "localNumero": "01",
+      "data": "2026-10-22T14:47:40.498Z"
+    }
+  ],
+  "estoque": [
+    {
+      "id": 1795694942438,
+      "nome": "paretamoçl",
+      "quantidade": 10,
+      "unidade": "frascos",
+      "categoria": "Antialérgico",
+      "createdAt": "2026-11-26T12:09:02.438Z"
+    },
+    {
+      "id": 1795695910164,
+      "nome": "dipirona",
+      "quantidade": 9,
+      "unidade": "frascos",
+      "categoria": "Antiespasmódico",
+      "createdAt": "2026-11-26T12:25:10.164Z",
+      "updatedAt": "2026-11-26T12:27:41.769Z"
+    }
+  ],
+  "historicoEstoque": [
+    {
+      "id": 1795696061769,
+      "medicamentoId": 1795695910164,
+      "nome": "dipirona",
+      "tipo": "retirada",
+      "quantidade": 1,
+      "unidade": "frascos",
+      "responsavel": "Almoxarifado",
+      "observacao": "",
+      "data": "2026-11-26T12:27:41.769Z"
+    },
+    {
+      "id": 1795695910164,
+      "medicamentoId": 1795695910164,
+      "nome": "dipirona",
+      "tipo": "cadastro",
+      "quantidade": 10,
+      "unidade": "frascos",
+      "responsavel": "Equipe Médica",
+      "data": "2026-11-26T12:25:10.164Z"
+    },
+    {
+      "id": 1795694942438,
+      "medicamentoId": 1795694942438,
+      "nome": "paretamoçl",
+      "tipo": "cadastro",
+      "quantidade": 10,
+      "unidade": "frascos",
+      "responsavel": "Equipe Médica",
+      "data": "2026-11-26T12:09:02.438Z"
+    }
+  ]
+}

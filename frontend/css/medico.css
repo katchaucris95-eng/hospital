@@ -1,0 +1,551 @@
+
+/* =========================================
+   PAINEL MÉDICO — DESIGN PROFISSIONAL
+   Paleta: Azul-marinho, branco e azul clínico
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --navy-950: #0b1426;
+    --navy-900: #101e35;
+    --navy-800: #172b49;
+    --navy-700: #223d60;
+
+    --blue-600: #2563eb;
+    --blue-500: #3478f6;
+    --blue-100: #eaf1ff;
+
+    --background: #f3f6fb;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+
+    --text-primary: #182438;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --success: #15803d;
+    --success-bg: #dcfce7;
+
+    --warning: #b45309;
+    --warning-bg: #fef3c7;
+
+    --danger: #b91c1c;
+    --danger-bg: #fee2e2;
+
+    --radius: 14px;
+    --shadow: 0 4px 20px rgba(15, 35, 65, 0.06);
+}
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    padding: 36px 24px;
+    background: var(--background);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* CONTAINER PRINCIPAL */
+
+.container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* TÍTULO PRINCIPAL */
+
+.container > h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    padding: 25px 30px;
+    overflow: hidden;
+
+    color: #ffffff;
+    background: linear-gradient(
+        120deg,
+        var(--navy-950),
+        var(--navy-800)
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(11, 20, 38, 0.16);
+
+    font-size: clamp(22px, 3vw, 29px);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.container > h2::after {
+    content: "";
+    position: absolute;
+    right: -35px;
+    top: -80px;
+
+    width: 230px;
+    height: 230px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 25px rgba(255, 255, 255, 0.025),
+        0 0 0 50px rgba(255, 255, 255, 0.02);
+
+    pointer-events: none;
+}
+
+/* SEÇÕES */
+
+.pacientes,
+.consulta {
+    padding: 28px;
+    margin-bottom: 26px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.pacientes > h3,
+.consulta > h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 24px;
+    padding-bottom: 17px;
+
+    color: var(--navy-900);
+    border-bottom: 1px solid var(--border);
+
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+}
+
+/* LISTA DE TRIAGEM */
+
+#triagens {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 260px), 1fr)
+    );
+    gap: 18px;
+}
+
+/* CARTÃO DO PACIENTE */
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+    padding: 22px;
+
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--blue-600);
+    border-radius: 12px;
+
+    box-shadow: 0 2px 8px rgba(15, 35, 65, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #c8d8f5;
+    box-shadow: 0 10px 25px rgba(15, 35, 65, 0.09);
+}
+
+.card h3 {
+    width: 100%;
+    margin-bottom: 14px;
+    color: var(--navy-900);
+    font-size: 17px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.card p {
+    width: 100%;
+    margin-bottom: 9px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.card p b {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* CLASSIFICAÇÃO DE RISCO
+   Compatível com classes comuns:
+   baixo, medio, alto, urgente e crítico.
+*/
+
+.card span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 5px 0 14px;
+    padding: 5px 11px;
+
+    border-radius: 6px;
+    background: var(--blue-100);
+    color: var(--blue-600);
+
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card span.baixo,
+.card span.baixo-risco,
+.card span.low {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.card span.medio,
+.card span.médio,
+.card span.moderado,
+.card span.moderate {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+
+.card span.alto,
+.card span.alto-risco,
+.card span.high,
+.card span.urgente,
+.card span.critico,
+.card span.crítico,
+.card span.critico-risco,
+.card span.critical {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+/* CAMPOS DE FORMULÁRIO */
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 16px;
+    padding: 13px 15px;
+
+    color: var(--text-primary);
+    background: #ffffff;
+
+    border: 1px solid #d9e2ef;
+    border-radius: 9px;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: #b6c7df;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--blue-600);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.11);
+}
+
+input[readonly] {
+    color: #52627a;
+    background: #f5f7fb;
+    border-color: #e3e9f2;
+    cursor: default;
+}
+
+input[readonly]:focus {
+    border-color: #d9e2ef;
+    box-shadow: none;
+}
+
+/* DADOS DO PACIENTE */
+
+.dados {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.dados input {
+    min-width: 0;
+}
+
+/* ÁREAS DE TEXTO */
+
+textarea {
+    min-height: 105px;
+    resize: vertical;
+}
+
+#diagnostico {
+    min-height: 145px;
+}
+
+#evolucao {
+    min-height: 125px;
+}
+
+/* SELETORES */
+
+select {
+    min-height: 47px;
+    cursor: pointer;
+    appearance: auto;
+}
+
+select:invalid {
+    color: var(--text-secondary);
+}
+
+/* BOTÕES */
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 43px;
+    padding: 11px 19px;
+
+    color: #ffffff;
+    background: var(--blue-600);
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+button:hover {
+    background: #1d4ed8;
+    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.2);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.3);
+    outline-offset: 3px;
+}
+
+/* BOTÃO ATENDER */
+
+.card button {
+    width: 100%;
+    margin-top: 10px;
+    background: var(--navy-900);
+}
+
+.card button:hover {
+    background: var(--blue-600);
+}
+
+/* BOTÃO SALVAR CONSULTA */
+
+.consulta > button {
+    width: 100%;
+    min-height: 49px;
+    margin-top: 4px;
+
+    background: linear-gradient(
+        110deg,
+        var(--navy-900),
+        var(--blue-600)
+    );
+
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+
+.consulta > button:hover {
+    background: linear-gradient(
+        110deg,
+        var(--navy-800),
+        #1d4ed8
+    );
+
+    box-shadow: 0 7px 18px rgba(37, 99, 235, 0.2);
+}
+
+/* SEPARADOR */
+
+hr {
+    height: 1px;
+    margin: 30px 0;
+    background: var(--border);
+    border: 0;
+}
+
+/* SELEÇÃO DE TEXTO */
+
+::selection {
+    color: #ffffff;
+    background: var(--blue-600);
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #edf1f7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bdc9da;
+    border: 2px solid #edf1f7;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8da2bf;
+}
+
+/* RESPONSIVIDADE — TABLETS */
+
+@media (max-width: 768px) {
+    body {
+        padding: 22px 16px;
+    }
+
+    .container > h2 {
+        padding: 22px;
+        margin-bottom: 22px;
+    }
+
+    .pacientes,
+    .consulta {
+        padding: 22px;
+    }
+
+    .dados {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+
+/* RESPONSIVIDADE — CELULARES */
+
+@media (max-width: 480px) {
+    body {
+        padding: 14px 10px;
+    }
+
+    .container > h2 {
+        padding: 19px 16px;
+        border-radius: 13px;
+        font-size: 21px;
+    }
+
+    .pacientes,
+    .consulta {
+        padding: 17px 14px;
+        border-radius: 11px;
+    }
+
+    .pacientes > h3,
+    .consulta > h3 {
+        font-size: 16px;
+    }
+
+    #triagens {
+        grid-template-columns: 1fr;
+    }
+
+    .dados {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
+
+/* ACESSIBILIDADE: MOVIMENTO REDUZIDO */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

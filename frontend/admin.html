@@ -1,0 +1,851 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Pro | Administração</title>
+
+    <style>
+        /* CONFIGURAÇÕES GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0b1f3a;
+            --navy-light: #142f50;
+            --blue: #1677b8;
+            --blue-light: #e8f3fc;
+            --white: #ffffff;
+            --background: #f1f5f9;
+            --text: #26384b;
+            --muted: #718096;
+            --border: #dce5ee;
+            --green: #15803d;
+            --red: #b42318;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        /* CABEÇALHO */
+        header {
+            background: linear-gradient(
+                120deg,
+                var(--navy),
+                var(--navy-light)
+            );
+            color: white;
+            padding: 24px 6%;
+            box-shadow: 0 5px 20px rgba(11, 31, 58, .15);
+        }
+
+        .header-content {
+            max-width: 1150px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 12px;
+            font-size: 25px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: .4px;
+        }
+
+        .logo p {
+            font-size: 12px;
+            color: #b8cce0;
+            margin-top: 4px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #d9e9f7;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            background: #35d18a;
+            border-radius: 50%;
+        }
+
+        /* CONTEÚDO */
+        main {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .back-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: var(--navy);
+        }
+
+        .btn-almoxarifado {
+            padding: 11px 17px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-almoxarifado:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            color: var(--navy);
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* CARDS */
+        .content-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(20, 47, 80, .045);
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 23px;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--blue-light);
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        .card-heading h3 {
+            color: var(--navy);
+            font-size: 18px;
+        }
+
+        .card-heading p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* FORMULÁRIO */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 15px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            outline: none;
+            color: var(--text);
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--blue);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(22, 119, 184, .12);
+        }
+
+        input::placeholder {
+            color: #9aa9b8;
+        }
+
+        .btn-cadastrar {
+            width: 100%;
+            padding: 15px;
+            margin-top: 5px;
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn-cadastrar:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: .6;
+            cursor: wait;
+            transform: none;
+        }
+
+        /* MENSAGENS */
+        .mensagem {
+            display: none;
+            padding: 13px 15px;
+            margin-top: 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .sucesso {
+            display: block;
+            background: #eaf8ef;
+            border: 1px solid #b8e5c7;
+            color: var(--green);
+        }
+
+        .erro {
+            display: block;
+            background: #fff0f0;
+            border: 1px solid #f1c4c4;
+            color: var(--red);
+        }
+
+        /* LISTA DE USUÁRIOS */
+        .lista-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .contador {
+            background: var(--blue-light);
+            color: var(--blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        #listaUsuarios {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .usuario-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 17px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--blue);
+            border-radius: 9px;
+            transition: .2s;
+        }
+
+        .usuario-card:hover {
+            background: #f0f6fb;
+            border-color: #b7d6ed;
+        }
+
+        .usuario-info {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-width: 0;
+        }
+
+        .usuario-avatar {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy);
+            color: white;
+            border-radius: 50%;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .usuario-nome {
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .usuario-id {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .setor {
+            padding: 7px 12px;
+            background: var(--blue-light);
+            color: var(--blue);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .estado-lista {
+            text-align: center;
+            padding: 25px 10px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .estado-lista .icone {
+            font-size: 28px;
+            margin-bottom: 9px;
+        }
+
+        /* RODAPÉ */
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #8998a8;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            .header-content {
+                align-items: flex-start;
+            }
+
+            .status {
+                font-size: 0;
+            }
+
+            main {
+                margin-top: 25px;
+                padding: 0 14px;
+            }
+
+            .content-card {
+                padding: 20px 16px;
+            }
+
+            .page-heading h2 {
+                font-size: 23px;
+            }
+
+            .usuario-card {
+                align-items: flex-start;
+            }
+
+            .setor {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="header-content">
+
+            <div class="logo">
+                <div class="logo-icon">✚</div>
+
+                <div>
+                    <h1>HOSPITAL SANTA AURA</h1>
+                    <p>Sistema de Gestão Hospitalar</p>
+                </div>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Painel administrativo
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- NAVEGAÇÃO -->
+        <div class="top-actions">
+
+            <a href="index.html" class="back-link">
+                ← Voltar para o login
+            </a>
+
+            <button
+                type="button"
+                class="btn-almoxarifado"
+                onclick="window.location.href='Almoxerifado.html'"
+            >
+                📦 Acessar Almoxarifado
+            </button>
+
+        </div>
+
+        <!-- TÍTULO -->
+        <div class="page-heading">
+            <h2>Painel Administrativo</h2>
+            <p>Gerencie os acessos e os usuários do sistema hospitalar.</p>
+        </div>
+
+        <!-- CADASTRO -->
+        <section class="content-card">
+
+            <div class="card-heading">
+                <div class="card-icon">👤</div>
+
+                <div>
+                    <h3>Cadastrar Usuário</h3>
+                    <p>Preencha os dados para criar um novo acesso.</p>
+                </div>
+            </div>
+
+            <form id="formUsuario">
+
+                <div class="form-group">
+                    <label for="usuario">Nome de usuário</label>
+
+                    <input
+                        type="text"
+                        id="usuario"
+                        placeholder="Digite o nome de usuário"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite uma senha"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo">Setor de acesso</label>
+
+                    <select id="tipo" required>
+                        <option value="">Selecione o setor</option>
+                        <option value="atendimento">Atendimento</option>
+                        <option value="triagem">Triagem</option>
+                        <option value="medico">Médico</option>
+                    </select>
+                </div>
+
+                <button
+                    type="submit"
+                    id="btnCadastrar"
+                    class="btn-cadastrar"
+                >
+                    Cadastrar Usuário
+                </button>
+
+            </form>
+
+            <div
+                id="mensagem"
+                class="mensagem"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+        <!-- USUÁRIOS CADASTRADOS -->
+        <section class="content-card">
+
+            <div class="lista-topo">
+
+                <div class="card-heading" style="margin-bottom: 0;">
+                    <div class="card-icon">📋</div>
+
+                    <div>
+                        <h3>Usuários Cadastrados</h3>
+                        <p>Visualize os acessos registrados no sistema.</p>
+                    </div>
+                </div>
+
+                <span class="contador" id="contador">
+                    0 usuários
+                </span>
+
+            </div>
+
+            <div id="listaUsuarios">
+                <div class="estado-lista">
+                    Carregando usuários...
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Hospital Pro © 2026 | Sistema de Gestão Hospitalar
+    </footer>
+
+    <script>
+
+        // ENDEREÇO DO BACKEND
+        const API = "http://localhost:3000";
+
+        // ELEMENTOS
+        const form = document.getElementById("formUsuario");
+        const botao = document.getElementById("btnCadastrar");
+        const mensagem = document.getElementById("mensagem");
+        const lista = document.getElementById("listaUsuarios");
+        const contador = document.getElementById("contador");
+
+        // EXIBIR MENSAGENS
+        function mostrarMensagem(texto, tipo) {
+            mensagem.textContent = texto;
+            mensagem.className = "mensagem " + tipo;
+        }
+
+        // LIMPAR MENSAGEM
+        function limparMensagem() {
+            mensagem.textContent = "";
+            mensagem.className = "mensagem";
+        }
+
+        // LER RESPOSTA DO SERVIDOR
+        async function lerResposta(resposta) {
+
+            const texto = await resposta.text();
+
+            let dados;
+
+            try {
+                dados = JSON.parse(texto);
+            } catch (erro) {
+                console.error("Resposta recebida:", texto);
+
+                throw new Error(
+                    "O servidor não retornou uma resposta válida. " +
+                    "Confira o backend e a rota solicitada."
+                );
+            }
+
+            if (!resposta.ok) {
+                throw new Error(
+                    dados.erro ||
+                    dados.mensagem ||
+                    "Não foi possível realizar a operação."
+                );
+            }
+
+            return dados;
+        }
+
+        // CADASTRAR USUÁRIO
+        form.addEventListener("submit", async function(evento) {
+
+            evento.preventDefault();
+
+            const usuario = document
+                .getElementById("usuario")
+                .value.trim();
+
+            const senha = document
+                .getElementById("senha")
+                .value;
+
+            const tipo = document
+                .getElementById("tipo")
+                .value;
+
+            if (!usuario || !senha || !tipo) {
+                mostrarMensagem(
+                    "Preencha todos os campos.",
+                    "erro"
+                );
+                return;
+            }
+
+            botao.disabled = true;
+            botao.textContent = "Cadastrando...";
+
+            limparMensagem();
+
+            try {
+
+                const resposta = await fetch(`${API}/usuarios`, {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        usuario: usuario,
+                        senha: senha,
+                        tipo: tipo
+                    })
+                });
+
+                const dados = await lerResposta(resposta);
+
+                mostrarMensagem(
+                    dados.mensagem ||
+                    "Usuário cadastrado com sucesso!",
+                    "sucesso"
+                );
+
+                form.reset();
+
+                // ATUALIZA A LISTA
+                await carregarUsuarios();
+
+            } catch (erro) {
+
+                console.error("Erro no cadastro:", erro);
+
+                mostrarMensagem(
+                    erro.message === "Failed to fetch"
+                        ? "Não foi possível conectar ao servidor. Verifique se o backend está funcionando na porta 3000."
+                        : erro.message,
+                    "erro"
+                );
+
+            } finally {
+
+                botao.disabled = false;
+                botao.textContent = "Cadastrar Usuário";
+
+            }
+
+        });
+
+        // LISTAR USUÁRIOS
+        async function carregarUsuarios() {
+
+            try {
+
+                const resposta = await fetch(`${API}/usuarios`, {
+                    method: "GET",
+
+                    headers: {
+                        "Accept": "application/json"
+                    },
+
+                    cache: "no-store"
+                });
+
+                const usuarios = await lerResposta(resposta);
+
+                if (!Array.isArray(usuarios)) {
+                    throw new Error(
+                        "O servidor retornou uma lista inválida."
+                    );
+                }
+
+                // LIMPA A LISTA ANTERIOR
+                lista.replaceChildren();
+
+                // ATUALIZA O CONTADOR
+                contador.textContent =
+                    usuarios.length +
+                    (usuarios.length === 1 ? " usuário" : " usuários");
+
+                // CASO NÃO EXISTAM USUÁRIOS
+                if (usuarios.length === 0) {
+
+                    const estado = document.createElement("div");
+                    estado.className = "estado-lista";
+
+                    const icone = document.createElement("div");
+                    icone.className = "icone";
+                    icone.textContent = "👥";
+
+                    const texto = document.createElement("p");
+                    texto.textContent =
+                        "Nenhum usuário cadastrado ainda.";
+
+                    estado.append(icone, texto);
+                    lista.appendChild(estado);
+
+                    return;
+                }
+
+                // NOMES DOS SETORES
+                const setores = {
+                    atendimento: "Atendimento",
+                    triagem: "Triagem",
+                    medico: "Médico"
+                };
+
+                // CRIA OS CARDS
+                usuarios.forEach(function(usuario) {
+
+                    const card = document.createElement("div");
+                    card.className = "usuario-card";
+
+                    const informacoes = document.createElement("div");
+                    informacoes.className = "usuario-info";
+
+                    const avatar = document.createElement("div");
+                    avatar.className = "usuario-avatar";
+
+                    avatar.textContent =
+                        (usuario.usuario || "?")
+                            .charAt(0)
+                            .toUpperCase();
+
+                    const detalhes = document.createElement("div");
+
+                    const nome = document.createElement("div");
+                    nome.className = "usuario-nome";
+                    nome.textContent = usuario.usuario || "Sem nome";
+
+                    const id = document.createElement("div");
+                    id.className = "usuario-id";
+                    id.textContent = "ID: " + usuario.id;
+
+                    detalhes.append(nome, id);
+
+                    informacoes.append(avatar, detalhes);
+
+                    const setor = document.createElement("span");
+                    setor.className = "setor";
+
+                    setor.textContent =
+                        setores[usuario.tipo] ||
+                        usuario.tipo ||
+                        "Não informado";
+
+                    card.append(informacoes, setor);
+
+                    lista.appendChild(card);
+
+                });
+
+            } catch (erro) {
+
+                console.error("Erro ao carregar usuários:", erro);
+
+                lista.replaceChildren();
+
+                const estado = document.createElement("div");
+                estado.className = "estado-lista";
+
+                estado.textContent =
+                    "Não foi possível carregar os usuários. " +
+                    erro.message;
+
+                lista.appendChild(estado);
+
+                contador.textContent = "Indisponível";
+
+            }
+
+        }
+
+        // CARREGAR USUÁRIOS AO ABRIR A PÁGINA
+        carregarUsuarios();
+
+    </script>
+
+</body>
+</html>
+```

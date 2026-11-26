@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mídia Indoor - TV Hospitalar</title>
+    <link rel="stylesheet" href="css/tv.css">
+
+
+</head>
+
+<body>
+    <main class="tv-container">
+        <section class="left-panel">
+            <div class="box local-box">
+                <div class="box-title" id="local-tipo">GUICHÊ</div>
+                <div class="local-number" id="local-numero">--</div>
+            </div>
+
+            <div class="box history-box">
+                <div class="box-title">ÚLTIMAS CHAMADAS</div>
+                <ul id="history-list"></ul>
+            </div>
+        </section>
+
+        <section class="right-panel">
+            <div class="box patient-box">
+                <div class="box-title">PACIENTE</div>
+                <div class="patient-name" id="patient-name">
+                    AGUARDANDO...
+                </div>
+                <div class="status" id="status">Sistema conectado</div>
+            </div>
+
+            <div class="box logo-box">
+                <div class="logo-text">🏥 Sistema Hospitalar</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let ultimaChamadaId = null;
+
+        async function atualizar() {
+            const status = document.getElementById("status");
+
+            try {
+                const resposta = await fetch("/TV/chamada", {
+                    cache: "no-store"
+                });
+
+                if (!resposta.ok) {
+                    throw new Error("HTTP " + resposta.status);
+                }
+
+                const data = await resposta.json();
+                const chamada = data.chamada;
+                const historico = data.historico || [];
+
+                if (chamada) {
+                    document.getElementById("local-tipo").textContent =
+                        chamada.localTipo || "GUICHÊ";
+
+                    document.getElementById("local-numero").textContent =
+                        chamada.localNumero || "--";
+
+                    document.getElementById("patient-name").textContent =
+                        chamada.paciente || "AGUARDANDO...";
+
+                    if (chamada.id !== ultimaChamadaId) {
+                        ultimaChamadaId = chamada.id;
+
+                        const caixa = document.querySelector(".patient-box");
+                        caixa.classList.remove("flash");
+                        void caixa.offsetWidth;
+                        caixa.classList.add("flash");
+                    }
+                } else {
+                    document.getElementById("patient-name").textContent =
+                        "AGUARDANDO...";
+
+                    document.getElementById("local-numero").textContent = "--";
+                }
+
+                const lista = document.getElementById("history-list");
+                lista.replaceChildren();
+
+                historico.slice(0, 4).forEach(item => {
+                    const li = document.createElement("li");
+
+                    li.textContent =
+                        `${item.localTipo || "GUICHÊ"} ` +
+                        `${item.localNumero || "--"} - ` +
+                        `${item.paciente || "Sem nome"}`;
+
+                    lista.appendChild(li);
+                });
+
+                status.textContent = "Sistema conectado";
+            } catch (erro) {
+                console.error("Erro ao atualizar TV:", erro);
+                status.textContent = "Sem conexão com o servidor";
+            }
+        }
+
+        atualizar();
+        setInterval(atualizar, 2000);
+    </script>
+</body>
+</html>

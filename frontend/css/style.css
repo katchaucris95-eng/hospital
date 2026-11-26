@@ -1,0 +1,517 @@
+
+/* ==========================================
+   HOSPITAL SANTA AURA
+   Login institucional — Design Premium
+========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
+
+:root {
+    --navy-dark: #071426;
+    --navy: #0d203b;
+    --navy-light: #17365b;
+
+    --blue: #2563eb;
+    --blue-light: #3b82f6;
+    --cyan: #56c8f5;
+
+    --white: #ffffff;
+    --text: #17253b;
+    --muted: #718096;
+    --border: #dce5f0;
+}
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            ellipse at 15% 15%,
+            rgba(37, 99, 235, 0.18),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 85% 85%,
+            rgba(86, 200, 245, 0.12),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #050d1b 0%,
+            #0b1c34 48%,
+            #102b4c 100%
+        );
+}
+
+/* ==========================================
+   LUZES ANIMADAS DO FUNDO
+========================================== */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+
+    z-index: -1;
+    pointer-events: none;
+
+    border-radius: 50%;
+    filter: blur(100px);
+
+    will-change: transform;
+}
+
+body::before {
+    width: 380px;
+    height: 380px;
+
+    top: -130px;
+    left: -100px;
+
+    background: rgba(37, 99, 235, 0.34);
+
+    animation: luzAzul 10s ease-in-out infinite alternate;
+}
+
+body::after {
+    width: 330px;
+    height: 330px;
+
+    right: -100px;
+    bottom: -100px;
+
+    background: rgba(34, 184, 230, 0.22);
+
+    animation: luzCiano 12s ease-in-out infinite alternate;
+}
+
+/* ==========================================
+   CARD PRINCIPAL
+========================================== */
+
+.container {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 430px;
+
+    padding: 42px 38px 38px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 24px;
+
+    box-shadow:
+        0 35px 90px rgba(0, 0, 0, 0.35),
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    animation: entrada 0.8s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+/* DETALHE AZUL NO TOPO */
+
+.container::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 15%;
+
+    width: 70%;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--blue),
+        var(--cyan),
+        transparent
+    );
+
+    border-radius: 0 0 8px 8px;
+}
+
+/* ==========================================
+   NOME DO HOSPITAL
+========================================== */
+
+h2 {
+    position: relative;
+
+    margin-bottom: 26px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(24px, 5vw, 29px);
+    font-weight: 800;
+
+    line-height: 1.3;
+    letter-spacing: -1px;
+
+    color: var(--navy);
+
+    text-shadow: 0 3px 12px rgba(37, 99, 235, 0.08);
+}
+
+/* SUBLINHADO DECORATIVO */
+
+h2::after {
+    content: "";
+
+    display: block;
+
+    width: 52px;
+    height: 4px;
+
+    margin: 12px auto 0;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        var(--blue),
+        var(--cyan)
+    );
+}
+
+/* ==========================================
+   LOGO / IMAGEM
+========================================== */
+
+.container img {
+    display: block;
+
+    width: 150px;
+    height: 150px;
+
+    max-width: 100%;
+
+    margin: 0 auto 30px;
+
+    object-fit: contain;
+
+    padding: 9px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edf5;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 7px rgba(37, 99, 235, 0.045),
+        0 12px 35px rgba(16, 42, 77, 0.13);
+
+    animation: flutuarLogo 4s ease-in-out infinite;
+
+    transition:
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.container img:hover {
+    border-color: rgba(59, 130, 246, 0.45);
+
+    box-shadow:
+        0 0 0 9px rgba(37, 99, 235, 0.07),
+        0 18px 40px rgba(37, 99, 235, 0.17);
+}
+
+/* ==========================================
+   CAMPOS DE USUÁRIO E SENHA
+========================================== */
+
+input {
+    display: block;
+
+    width: 100%;
+    min-height: 53px;
+
+    margin-bottom: 17px;
+    padding: 15px 17px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    color: var(--text);
+
+    background: #f7f9fc;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    outline: none;
+
+    box-shadow: 0 2px 5px rgba(15, 35, 65, 0.02);
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+input::placeholder {
+    color: #8795a9;
+    font-weight: 400;
+}
+
+input:hover {
+    border-color: #b9c9df;
+    background: #ffffff;
+}
+
+input:focus {
+    background: #ffffff;
+
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.10),
+        0 5px 15px rgba(15, 35, 65, 0.04);
+
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   BOTÃO ENTRAR
+========================================== */
+
+button {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 53px;
+
+    margin-top: 5px;
+    padding: 15px 20px;
+
+    overflow: hidden;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        110deg,
+        #102747 0%,
+        #174477 52%,
+        #2563eb 100%
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(16, 42, 77, 0.19);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+
+/* BRILHO SUAVE NO BOTÃO */
+
+button::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.17),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(16, 42, 77, 0.25);
+
+    filter: brightness(1.08);
+}
+
+button:hover::before {
+    left: 150%;
+}
+
+button:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 4px 12px rgba(16, 42, 77, 0.15);
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.35);
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   ANIMAÇÃO DE ENTRADA
+========================================== */
+
+@keyframes entrada {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==========================================
+   MOVIMENTO DA LOGO
+========================================== */
+
+@keyframes flutuarLogo {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+/* ==========================================
+   LUZES DO FUNDO
+========================================== */
+
+@keyframes luzAzul {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(90px, 65px) scale(1.12);
+    }
+}
+
+@keyframes luzCiano {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(-75px, -55px) scale(1.12);
+    }
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+========================================== */
+
+@media (max-width: 500px) {
+    body {
+        padding: 18px;
+    }
+
+    .container {
+        max-width: 390px;
+        padding: 34px 24px 28px;
+        border-radius: 20px;
+    }
+
+    h2 {
+        font-size: 25px;
+        margin-bottom: 23px;
+    }
+
+    .container img {
+        width: 125px;
+        height: 125px;
+        margin-bottom: 26px;
+    }
+
+    input,
+    button {
+        min-height: 50px;
+    }
+}
+
+@media (max-width: 350px) {
+    .container {
+        padding: 28px 18px 23px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .container img {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+/* ==========================================
+   ACESSIBILIDADE
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

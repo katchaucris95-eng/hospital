@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem Hospitalar</title>
+    <link rel="stylesheet" href="css/triagem.css">
+
+    
+</head>
+
+<body>
+<div class="container">
+
+    <header class="cabecalho">
+        <h2>🏥 Triagem Hospitalar</h2>
+        <button type="button" onclick="abrirTV()">📺 Abrir TV</button>
+    </header>
+
+    <section class="painel">
+        <h3>Pacientes cadastrados</h3>
+
+        <div id="fila-pacientes">
+            Carregando pacientes...
+        </div>
+
+        <button type="button" class="btn-atualizar"
+                onclick="carregarPacientes()">
+            Atualizar lista
+        </button>
+    </section>
+
+    <form id="form-triagem" class="painel">
+        <h3>Dados do paciente</h3>
+
+        <div class="grade">
+            <input id="nome" placeholder="Nome completo" required>
+            <input id="cpf" placeholder="CPF">
+            <input id="nascimento" type="date">
+
+            <select id="sexo">
+                <option value="">Sexo</option>
+                <option>Masculino</option>
+                <option>Feminino</option>
+                <option>Outro</option>
+            </select>
+
+            <input id="telefone" placeholder="Telefone">
+
+            <select id="convenio">
+                <option>Particular</option>
+                <option>Convênio</option>
+            </select>
+        </div>
+
+        <h3>Sinais vitais</h3>
+
+        <div class="grade">
+            <input id="temp" type="number" step="0.1"
+                   placeholder="Temperatura °C">
+
+            <input id="pressao" placeholder="Pressão arterial (120/80)">
+
+            <input id="cardiaca" type="number"
+                   placeholder="Frequência cardíaca">
+
+            <input id="saturacao" type="number"
+                   placeholder="Saturação O₂ (%)">
+
+            <input id="peso" type="number" step="0.1"
+                   placeholder="Peso (kg)">
+        </div>
+
+        <h3>Avaliação</h3>
+
+        <div class="grade">
+            <select id="sintoma">
+                <option value="">Sintoma principal</option>
+                <option value="dor">Dor</option>
+                <option value="febre">Febre</option>
+                <option value="tosse">Tosse</option>
+                <option value="falta_ar">Falta de ar</option>
+                <option value="infarto">Suspeita de infarto</option>
+                <option value="avc">Suspeita de AVC</option>
+                <option value="hemorragia">Hemorragia</option>
+            </select>
+
+            <select id="dor">
+                <option value="">Nível de dor</option>
+                <option>0</option><option>1</option><option>2</option>
+                <option>3</option><option>4</option><option>5</option>
+                <option>6</option><option>7</option><option>8</option>
+                <option>9</option><option>10</option>
+            </select>
+
+            <input id="alergia" placeholder="Alergias">
+
+            <textarea id="historico" placeholder="Histórico médico"></textarea>
+
+            <textarea id="observacao"
+                      placeholder="Observações do enfermeiro"></textarea>
+        </div>
+
+        <p>
+            <button type="submit" class="btn-tv">Salvar triagem</button>
+        </p>
+
+        <div id="resultado" class="mensagem" role="status"></div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById("form-triagem");
+
+    function abrirTV() {
+        window.open("/tv.html", "_blank");
+    }
+
+    async function carregarPacientes() {
+        const fila = document.getElementById("fila-pacientes");
+        fila.textContent = "Carregando pacientes...";
+
+        try {
+            const resposta = await fetch("/atendimento", {
+                cache: "no-store"
+            });
+
+            if (!resposta.ok) {
+                throw new Error("Erro HTTP " + resposta.status);
+            }
+
+            const pacientes = await resposta.json();
+            fila.replaceChildren();
+
+            if (!pacientes.length) {
+                fila.textContent = "Nenhum paciente cadastrado.";
+                return;
+            }
+
+            pacientes.slice().reverse().forEach(paciente => {
+                const item = document.createElement("div");
+                item.className = "fila-item";
+
+                const info = document.createElement("div");
+                const nome = document.createElement("strong");
+                const detalhe = document.createElement("small");
+
+                nome.textContent = paciente.nome || "Sem nome";
+                detalhe.textContent = "Status: " +
+                    (paciente.status || "aguardando");
+
+                info.append(nome, detalhe);
+
+                const botao = document.createElement("button");
+                botao.type = "button";
+                botao.className = "btn-tv";
+                botao.textContent = "Chamar na TV";
+
+                botao.addEventListener("click", () => {
+                    chamarNaTV(paciente.nome);
+                });
+
+                item.append(info, botao);
+                fila.appendChild(item);
+            });
+        } catch (erro) {
+            console.error(erro);
+            fila.textContent =
+                "Não foi possível carregar os pacientes. Verifique o servidor.";
+        }
+    }
+
+    async function chamarNaTV(nomePaciente) {
+        if (!nomePaciente || !nomePaciente.trim()) {
+            alert("O paciente não possui nome.");
+            return;
+        }
+
+        try {
+            const resposta = await fetch("/TV/chamar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    paciente: nomePaciente,
+                    localTipo: "GUICHÊ",
+                    localNumero: "01"
+                })
+            });
+
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(dados.erro || "Falha na chamada.");
+            }
+
+            alert("Paciente chamado na TV: " + nomePaciente);
+        } catch (erro) {
+            console.error(erro);
+            alert("Erro ao chamar paciente. Verifique o servidor.");
+        }
+    }
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const resultado = document.getElementById("resultado");
+        resultado.textContent = "Salvando...";
+
+        const dados = {
+            nome: document.getElementById("nome").value.trim(),
+            cpf: document.getElementById("cpf").value.trim(),
+            nascimento: document.getElementById("nascimento").value,
+            sexo: document.getElementById("sexo").value,
+            telefone: document.getElementById("telefone").value.trim(),
+            convenio: document.getElementById("convenio").value,
+            temperatura: document.getElementById("temp").value,
+            pressao: document.getElementById("pressao").value.trim(),
+            cardiaca: document.getElementById("cardiaca").value,
+            saturacao: document.getElementById("saturacao").value,
+            peso: document.getElementById("peso").value,
+            sintoma: document.getElementById("sintoma").value,
+            nivelDor: document.getElementById("dor").value,
+            alergia: document.getElementById("alergia").value.trim(),
+            historico: document.getElementById("historico").value.trim(),
+            observacao: document.getElementById("observacao").value.trim()
+        };
+
+        try {
+            const resposta = await fetch("/triagem", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
+            });
+
+            const retorno = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(retorno.erro || "Não foi possível salvar.");
+            }
+
+            resultado.textContent = retorno.mensagem;
+            form.reset();
+            await carregarPacientes();
+        } catch (erro) {
+            console.error(erro);
+            resultado.textContent = "Erro ao salvar: " + erro.message;
+        }
+    });
+
+    carregarPacientes();
+</script>
+</body>
+</html>

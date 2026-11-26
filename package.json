@@ -1,0 +1,16 @@
+
+{
+  "name": "hospital-system",
+  "version": "1.0.0",
+  "description": "Sistema hospitalar",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql": "^2.18.1"
+  },
+  "type": "commonjs"
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="css/atendimento.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🏥 Cadastro de Paciente</h2>
+
+
+<input id="nome" placeholder="Nome completo">
+<input id="CPF/RG ou outro documento" placeholder="CPF">
+<input type="Data de nascimento" placeholder="Data de nascimento">
+<input type="Sexo" placeholder="Sexo">
+<input type="Nome da Mãe" placeholder="Nome da Mãe">
+<input type="Estado Civil" placeholder="Estado Civil">
+<input type="Endereço" placeholder="Endereço">
+<input type="Telefone" placeholder="Telefone">
+<input type="E-mail" placeholder="E-mail">
+<input type="Contato de Emergência" placeholder="Contato de Emergência">
+
+
+<input 
+id="nascimento" 
+type="date"
+>
+
+
+<select id="sexo">
+
+<option value="">Sexo</option>
+<option>Masculino</option>
+<option>Feminino</option>
+<option>Outro</option>
+
+</select>
+
+
+<input 
+id="telefone" 
+placeholder="Telefone"
+>
+
+
+<input 
+id="endereco" 
+placeholder="Endereço"
+>
+
+
+<select id="tipo">
+
+<option>Convênio</option>
+
+<option>Particular</option>
+
+</select>
+
+
+
+<input 
+id="convenio"
+placeholder="Nome do convênio"
+>
+
+
+
+<select id="prioridade">
+
+<option>Normal</option>
+
+<option>Urgente</option>
+
+<option>Emergência</option>
+
+</select>
+
+
+
+<textarea 
+id="sintomas"
+placeholder="Descreva os sintomas"
+></textarea>
+
+
+
+<input 
+type="file" 
+id="foto"
+>
+
+
+
+<button onclick="cadastrar()">
+Cadastrar Paciente
+</button>
+
+
+</div>
+
+
+
+<script>
+
+function cadastrar(){
+
+fetch("http://localhost:3000/atendimento",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+
+body:JSON.stringify({
+
+nome:nome.value,
+
+cpf:cpf.value,
+
+nascimento:nascimento.value,
+
+sexo:sexo.value,
+
+telefone:telefone.value,
+
+endereco:endereco.value,
+
+tipo:tipo.value,
+
+convenio:convenio.value,
+
+prioridade:prioridade.value,
+
+sintomas:sintomas.value
+
+
+})
+
+})
+
+
+.then(()=>{
+
+alert("Paciente enviado para triagem");
+
+})
+
+
+}
+
+</script>
+
+
+</body>
+</html>

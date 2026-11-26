@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css/medicacoes.css">
+
+    <title>Medicações Prescritas</title>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <h2>💊 Controle de Medicações</h2>
+
+
+
+        <div class="topo">
+
+            <h3>Prescrições Médicas</h3>
+
+            <p>
+                Acompanhamento dos medicamentos dos pacientes
+            </p>
+
+
+        </div>
+
+
+
+
+        <div id="listaMedicacoes"></div>
+
+
+
+    </div>
+
+
+
+
+
+    <script>
+
+
+        function carregarMedicacoesPrescritas() {
+
+
+
+            fetch("/medicacoes")
+
+
+                .then(res => res.json())
+
+
+                .then(data => {
+
+
+
+                    const lista = document.getElementById(
+                        "listaMedicacoes"
+                    );
+
+
+
+                    lista.innerHTML = "";
+
+
+
+
+
+                    if (data.length === 0) {
+
+
+                        lista.innerHTML = `
+
+<div class="vazio">
+
+<h3>📭 Nenhuma prescrição encontrada</h3>
+
+<p>
+Não existem medicamentos registrados.
+</p>
+
+</div>
+
+`;
+
+                        return;
+
+
+                    }
+
+
+
+
+
+
+
+                    data.forEach(med => {
+
+
+                        lista.innerHTML += `
+
+
+
+<div class="card">
+
+
+
+<div class="cabecalho">
+
+
+<h3>
+👤 ${med.paciente}
+</h3>
+
+
+<span class="status ${med.status}">
+${med.status || "Ativa"}
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="dados">
+
+
+
+<div>
+
+<b>🆔 Prontuário</b>
+
+<p>
+${med.prontuario || "Não informado"}
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<b>🧾 CPF</b>
+
+<p>
+${med.cpf || "Não informado"}
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<b>🩺 Médico</b>
+
+<p>
+${med.medico || "Não informado"}
+</p>
+
+</div>
+
+
+
+
+
+<div>
+
+<b>📅 Data</b>
+
+<p>
+${med.data || "Não informado"}
+</p>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+<div class="medicamento">
+
+
+
+<h3>
+💊 Medicamento
+</h3>
+
+
+
+<p>
+<strong>
+Nome:
+</strong>
+
+${med.medicacao}
+
+</p>
+
+
+
+
+
+<p>
+
+<strong>
+Dosagem:
+</strong>
+
+${med.dosagem || "Não informado"}
+
+</p>
+
+
+
+
+
+<p>
+
+<strong>
+Via:
+</strong>
+
+${med.via || "Não informado"}
+
+</p>
+
+
+
+
+
+
+<p>
+
+<strong>
+Frequência:
+</strong>
+
+${med.frequencia || "Não informado"}
+
+</p>
+
+
+
+
+
+
+<p>
+
+<strong>
+Horário:
+</strong>
+
+${med.horario || "Não informado"}
+
+</p>
+
+
+
+
+
+
+
+<p>
+
+<strong>
+Tempo de uso:
+</strong>
+
+${med.duracao || "Não informado"}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="diagnostico">
+
+
+
+<h3>
+📋 Informações Clínicas
+</h3>
+
+
+
+<p>
+
+<strong>
+Diagnóstico:
+</strong>
+
+${med.diagnostico || "Não informado"}
+
+</p>
+
+
+
+
+
+
+<p>
+
+<strong>
+Observações:
+</strong>
+
+${med.obs || "Nenhuma"}
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+`;
+
+
+
+                    });
+
+
+
+
+                });
+
+
+
+        }
+
+
+
+
+
+        carregarMedicacoesPrescritas();
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

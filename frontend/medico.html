@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinela | Painel Médico</title>
+
+    <link rel="stylesheet" href="css/medico.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🩺 Painel Médico</h2>
+
+    <section class="pacientes">
+
+        <h3>Pacientes na Triagem</h3>
+
+        <div id="triagens">
+            Carregando pacientes...
+        </div>
+
+    </section>
+
+    <hr>
+
+    <section class="consulta">
+
+        <h3>📋 Consulta Médica</h3>
+
+        <input
+            id="paciente"
+            placeholder="Paciente selecionado"
+            readonly
+        >
+
+        <div class="dados">
+
+            <input
+                id="idade"
+                placeholder="Idade"
+                readonly
+            >
+
+            <input
+                id="sangue"
+                placeholder="Tipo sanguíneo"
+                readonly
+            >
+
+            <input
+                id="convenio"
+                placeholder="Convênio"
+                readonly
+            >
+
+        </div>
+
+        <textarea
+            id="diagnostico"
+            placeholder="Diagnóstico detalhado">
+        </textarea>
+
+        <select id="status">
+            <option>Aguardando</option>
+            <option>Em atendimento</option>
+            <option>Aguardando exames</option>
+            <option>Finalizada</option>
+        </select>
+
+        <select id="medicacao">
+
+            <option value="">
+                Selecione a medicação
+            </option>
+
+        </select>
+
+        <textarea
+            id="exames"
+            placeholder="Exames solicitados">
+        </textarea>
+
+        <textarea
+            id="evolucao"
+            placeholder="Evolução médica">
+        </textarea>
+
+        <textarea
+            id="obs"
+            placeholder="Observações">
+        </textarea>
+
+        <button type="button" onclick="salvar()">
+            💾 Salvar Consulta
+        </button>
+
+    </section>
+
+</div>
+
+<script>
+
+let triagensCarregadas = [];
+
+
+// ELEMENTOS DA PÁGINA
+
+const campoPaciente = document.getElementById("paciente");
+const campoIdade = document.getElementById("idade");
+const campoSangue = document.getElementById("sangue");
+const campoConvenio = document.getElementById("convenio");
+
+const campoDiagnostico = document.getElementById("diagnostico");
+const campoStatus = document.getElementById("status");
+const campoMedicacao = document.getElementById("medicacao");
+
+const campoExames = document.getElementById("exames");
+const campoEvolucao = document.getElementById("evolucao");
+const campoObs = document.getElementById("obs");
+
+
+// FUNÇÃO PARA VERIFICAR RESPOSTAS DA API
+
+async function requisicao(url, opcoes = {}) {
+
+    const resposta = await fetch(url, opcoes);
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+        throw new Error(
+            dados.erro || dados.mensagem || "Erro na comunicação com o servidor."
+        );
+    }
+
+    return dados;
+}
+
+
+// CARREGAR PACIENTES DA TRIAGEM
+
+async function carregar() {
+
+    const div = document.getElementById("triagens");
+
+    try {
+
+        const data = await requisicao("/triagens");
+
+        triagensCarregadas = data;
+
+        div.innerHTML = "";
+
+        if (!Array.isArray(data) || data.length === 0) {
+
+            div.innerHTML = "<p>Nenhum paciente aguardando atendimento.</p>";
+
+            return;
+        }
+
+        data.forEach((t, index) => {
+
+            div.innerHTML += `
+
+                <div class="card">
+
+                    <h3>${t.nome || "Paciente"}</h3>
+
+                    <p>
+                        <b>Sintoma:</b>
+                        ${t.sintoma || "Não informado"}
+                    </p>
+
+                    <p>
+                        <b>Temperatura:</b>
+                        ${t.temperatura || "--"} °C
+                    </p>
+
+                    <p>
+                        <b>Pressão:</b>
+                        ${t.pressao || "--"}
+                    </p>
+
+                    <p>
+                        <b>Saturação:</b>
+                        ${t.saturacao || "--"}%
+                    </p>
+
+                    <span class="${t.risco || ""}">
+                        ${t.risco || "Não informado"}
+                    </span>
+
+                    <p>
+                        <b>Alergia:</b>
+                        ${t.alergia || "Nenhuma"}
+                    </p>
+
+                    <button type="button" onclick="selecionar(${index})">
+                        Atender
+                    </button>
+
+                </div>
+
+            `;
+
+        });
+
+    } catch (erro) {
+
+        div.innerHTML = "<p>Erro ao carregar pacientes.</p>";
+
+        console.error(erro);
+
+    }
+
+}
+
+
+// SELECIONAR PACIENTE
+
+function selecionar(index) {
+
+    const t = triagensCarregadas[index];
+
+    if (!t) return;
+
+    campoPaciente.value = t.nome || "";
+
+    campoIdade.value = t.idade || "";
+
+    campoSangue.value = t.sangue || "";
+
+    campoConvenio.value = t.convenio || "";
+
+    campoObs.value = t.observacao || "";
+
+    if (t.alergia && t.alergia !== "Nenhuma") {
+
+        alert("⚠️ Atenção! Alergia do paciente: " + t.alergia);
+
+    }
+
+}
+
+
+// CARREGAR MEDICAMENTOS
+
+async function carregarMedicacoes() {
+
+    try {
+
+        const data = await requisicao("/lista-medicacoes");
+
+        campoMedicacao.innerHTML = `
+            <option value="">Selecione a medicação</option>
+        `;
+
+        data.forEach(m => {
+
+            const option = document.createElement("option");
+
+            option.value = m;
+
+            option.textContent = m;
+
+            campoMedicacao.appendChild(option);
+
+        });
+
+    } catch (erro) {
+
+        console.error("Erro ao carregar medicações:", erro);
+
+        alert("Não foi possível carregar a lista de medicamentos.");
+
+    }
+
+}
+
+
+// SALVAR CONSULTA E ATUALIZAR ESTOQUE
+
+async function salvar() {
+
+    if (!campoPaciente.value) {
+
+        alert("Selecione um paciente primeiro.");
+
+        return;
+    }
+
+    const medicacaoEscolhida = campoMedicacao.value;
+
+    let medicamentoEstoque = null;
+
+    let estoqueDescontado = false;
+
+    try {
+
+        // 1. VERIFICAR SE O MEDICAMENTO EXISTE NO ESTOQUE
+
+        if (medicacaoEscolhida) {
+
+            const estoque = await requisicao("/estoque");
+
+            medicamentoEstoque = estoque.find(m =>
+
+                m.nome.trim().toLowerCase() ===
+                medicacaoEscolhida.trim().toLowerCase()
+
+            );
+
+            if (!medicamentoEstoque) {
+
+                throw new Error(
+                    "Esse medicamento não foi encontrado no Almoxarifado."
+                );
+
+            }
+
+            if (Number(medicamentoEstoque.quantidade) < 1) {
+
+                throw new Error(
+                    "Medicamento sem estoque disponível!"
+                );
+
+            }
+
+        }
+
+
+        // 2. DESCONTAR UMA UNIDADE DO ESTOQUE
+
+        if (medicamentoEstoque) {
+
+            await requisicao(
+                `/estoque/${medicamentoEstoque.id}`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        quantidade: -1
+                    })
+                }
+            );
+
+            estoqueDescontado = true;
+
+        }
+
+
+        // 3. SALVAR A CONSULTA
+
+        await requisicao("/consulta", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                paciente: campoPaciente.value,
+
+                diagnostico: campoDiagnostico.value,
+
+                status: campoStatus.value,
+
+                medicacao: medicacaoEscolhida,
+
+                exames: campoExames.value,
+
+                evolucao: campoEvolucao.value,
+
+                obs: campoObs.value
+
+            })
+
+        });
+
+
+        // 4. CONFIRMAR OPERAÇÃO
+
+        if (medicamentoEstoque) {
+
+            alert(
+                "Consulta salva com sucesso!\n\n" +
+                "Medicamento: " + medicacaoEscolhida +
+                "\nUma unidade foi retirada do Almoxarifado."
+            );
+
+        } else {
+
+            alert("Consulta salva com sucesso!");
+
+        }
+
+
+        // LIMPAR CAMPOS
+
+        campoDiagnostico.value = "";
+
+        campoExames.value = "";
+
+        campoEvolucao.value = "";
+
+        campoObs.value = "";
+
+        campoMedicacao.value = "";
+
+        campoStatus.value = "Aguardando";
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        // SE A CONSULTA FALHAR, DEVOLVER A UNIDADE AO ESTOQUE
+
+        if (estoqueDescontado && medicamentoEstoque) {
+
+            try {
+
+                await requisicao(
+                    `/estoque/${medicamentoEstoque.id}`,
+                    {
+                        method: "PATCH",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            quantidade: 1
+                        })
+                    }
+                );
+
+            } catch (erroEstorno) {
+
+                console.error(
+                    "Erro ao devolver medicamento ao estoque:",
+                    erroEstorno
+                );
+
+                alert(
+                    "Atenção: não foi possível devolver automaticamente " +
+                    "o medicamento ao estoque. Confira o Almoxarifado."
+                );
+
+            }
+
+        }
+
+        alert(erro.message);
+
+    }
+
+}
+
+
+// INICIAR PÁGINA
+
+carregar();
+
+carregarMedicacoes();
+
+</script>
+
+</body>
+</html>
